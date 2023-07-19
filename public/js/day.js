@@ -92,31 +92,24 @@ function findArrayInArrayOfArrays(findArray, arrayOfArrays) {
  */
 
 function updateDayView(dayString, timeBlocks) {
-	console.log("Specific Date:", dayString)
-	console.log("timeBlocks:", timeBlocks)
-
 	// Update the selected date heading with the new dayString
 	selectedDateHeading.innerText = `${days[dayString.getDay()]} ${
 		months[dayString.getMonth()]
 	} ${dayString.getDate()}`
 
-	// console.log("timeBlocks: ", timeBlocks)
 	// Generate the HTML for the time slots
 	let timeSlots = ""
-	// console.log("dayString: ", dayString)
 
 	const openTimeSlots = generateTimeSlots(
 		dayString.getDate(),
 		dayString.getMonth(),
 		dayString.getFullYear()
 	)
-	// console.log("openTimeSlots: ", openTimeSlots)
 
 	!!openTimeSlots &&
 		openTimeSlots.forEach((timeBlock) => {
 			const isBooked = findArrayInArrayOfArrays(timeBlock, timeBlocks)
-			// console.log(result)
-			// console.log(timeBlock)
+
 			const startTime = new Date(timeBlock[0]),
 				finishTime = new Date(timeBlock[1]),
 				startHour = startTime.getHours(),
@@ -147,7 +140,7 @@ function updateDayView(dayString, timeBlocks) {
 		el.addEventListener("click", () => {
 			const start = el.getAttribute("data-start")
 			const end = el.getAttribute("data-end")
-			console.log("TIMESLOT CLICK:", el)
+
 			addBooking(start, end)
 
 			// Add "disabled" class and remove "available" class
@@ -155,16 +148,14 @@ function updateDayView(dayString, timeBlocks) {
 			el.classList.remove("available")
 		})
 	})
-
-	// console.log("Time Blocks:", timeBlocks)
 }
+
 /**
  * Sends a PUT request to add a booking.
  * @param {string} start - The start time of the booking.
  * @param {string} finish - The end time of the booking.
  */
 const addBooking = async (start, finish) => {
-	console.log("start: ", start, "finish: ", finish)
 	try {
 		const response = await fetch("/api/data", {
 			method: "PUT",

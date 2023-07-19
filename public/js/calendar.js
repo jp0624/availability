@@ -70,10 +70,10 @@ function generateCalendar() {
 				if (!!bookedBlocks) {
 					if (bookedBlocks && bookedBlocks.length) {
 						sortedTimeBlocks = sortTimeBlocks(bookedBlocks)
-						console.log("sortedTimeBlocks: ", sortedTimeBlocks)
 					}
 				}
 				console.log("sorted")
+				updateBookedBlocks()
 				updateDate(specificDate, sortedTimeBlocks)
 				updateDayView(specificDate, sortedTimeBlocks)
 			})
@@ -209,7 +209,6 @@ function generateCalendar() {
 async function updateBookedBlocks() {
 	try {
 		const result = await fetchData("/api/data")
-		// console.log("result: ", result)
 
 		// Convert the timestamps to Toronto EST
 		const torontoTimeBlocks = result.bookedBlocks.map((block) => {
@@ -219,7 +218,6 @@ async function updateBookedBlocks() {
 		})
 
 		bookedBlocks = torontoTimeBlocks
-		// console.log("bookedBlocks: ", bookedBlocks)
 		return Promise.resolve()
 	} catch (error) {
 		console.error("Error:", error)
