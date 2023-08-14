@@ -2,7 +2,7 @@ const express = require("express")
 const path = require("path")
 const fs = require("fs")
 const app = express()
-const port = 3003
+const port = 5000
 
 let data = JSON.parse(fs.readFileSync("data.json"))
 
@@ -64,3 +64,6 @@ const formatDateTime = (dateTimeString) => {
 app.listen(port, () => {
 	console.log(`Server running on port ${port}`)
 })
+
+// Export the Express API
+module.exports = app
